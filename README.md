@@ -1,40 +1,88 @@
 # Faculty Guide Allocation and Project Management System
 
-A Java + MongoDB web application for guide allocation, project tracking, milestones, announcements, and coordinator reports. MongoDB Compass is used to view the database documents visually.
+A Java web application for managing faculty guide allocation, student projects, milestones, and announcements.
 
-## First-time setup on Windows
+The system helps prevent faculty over-allocation and ensures that a student receives only one approved guide.
 
-1. Install **MongoDB Community Server** from https://www.mongodb.com/try/download/community. Keep the standard local server port, `27017`.
-2. Install **MongoDB Compass** from https://www.mongodb.com/try/download/compass if it was not installed with the server.
-3. Open Compass and connect to `mongodb://localhost:27017`. Do not create collections manually: the Java application creates and seeds them on its first start.
-4. In PowerShell in this project folder, run the driver setup script once:
+## Features
 
-```powershell
-.\scripts\setup-mongodb-driver.ps1
-```
+### Student
 
-If PowerShell blocks local scripts, use this one-time command instead:
+- Login
+- View available faculty and remaining seats
+- View faculty research domains
+- Submit a guide request
+- Check request status
+- View assigned project
+- Submit project milestones
+- View announcements
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\scripts\setup-mongodb-driver.ps1
-```
+### Faculty
 
-## Run
+- Login
+- View incoming guide requests
+- Accept or reject requests
+- View supervised projects
+- Post announcements
 
-```powershell
-New-Item -ItemType Directory -Force out
-javac -cp "lib/*" -d out src\main\java\com\college\guide\*.java
-java -cp "out;lib/*" com.college.guide.App
-```
+### Department Coordinator/Admin
 
-Open http://localhost:8080. The starter documents are created automatically. Use `student1@college.edu`, `faculty1@college.edu`, or `admin@college.edu`; password: `password`.
+- Add students and faculty
+- Assign research domains to faculty
+- View faculty allocation report
+- Lock or unlock new guide requests
+- Post announcements
 
-Optional environment variables:
+## Technology Used
 
-```powershell
-$env:MONGODB_URI="mongodb://localhost:27017"
-$env:MONGODB_DATABASE="faculty_guide_db"
-```
+- Backend: Java
+- Frontend: HTML, CSS, JavaScript
+- Database: MongoDB Atlas / MongoDB Community Server
+- Database Viewer: MongoDB Compass
+- Database Driver: MongoDB Java Driver
 
-The earlier PostgreSQL driver is no longer required by this MongoDB version.
+## Project Structure
+project/
+│
+├── database/
+│   └── mongodb-collections.md
+│
+├── lib/
+│   └── MongoDB Java driver JAR files
+│
+├── scripts/
+│   └── setup-mongodb-driver.ps1
+│
+├── src/
+│   └── main/
+│       └── java/
+│           └── com/
+│               └── college/
+│                   └── guide/
+│                       ├── App.java
+│                       ├── Database.java
+│                       ├── MongoApi.java
+│                       └── Passwords.java
+│
+├── out/
+│   └── Compiled Java class files
+│
+└── README.md
+
+
+## MongoDB Collections
+
+The application creates the following MongoDB collections automatically on first startup:
+
+
+users
+students
+faculty
+domains
+guideRequests
+projects
+milestones
+announcements
+settings
+counters
+`
